@@ -14,18 +14,21 @@ with open('calls.csv', 'r') as f:
     reader = csv.reader(f)
     calls = list(reader)
 
-
     for i in calls:
         di[i[0]] = di.get(i[0], 0) + int(i[3])
         di[i[1]] = di.get(i[1], 0) + int(i[3])
 
-        all_numbers = [(value, key) for key, value in di.items()]
-        longest_number = max(all_numbers)[1]
-        duration = max(all_numbers)[0]
+all_numbers = [(value, key) for key, value in di.items()]
 
+longest_time = 0
+chatty_number = None
 
-print(f"{longest_number} spent the longest time, {duration} seconds, on the phone during September 2016.")
+for number in all_numbers:
+    if number[0] > longest_time:
+        longest_time = number[0]
+        chatty_number = number[1]
 
+print(f"{chatty_number} spent the longest time, {longest_time} seconds, on the phone during September 2016.")
 
 
 """

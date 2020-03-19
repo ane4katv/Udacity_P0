@@ -1,7 +1,41 @@
-
-
 Task0.py O(1)
-Task1.py O(n)
+# O(1) Getting item from the list using specific index (7 times)
+
+Task1.py:  O(n)
+# O(n) - looping through a list (2 times)
+# O(1) - checking if item in a dictionary (4 times)
+# O(1) - adding or assigning 1 to dictionary value (4 times)
+# O(1) - calculating length of dictonary
+
+# O(n) - Final Result: getting the worse performance from all tasks
+
 Task2.py O(n)
+# O(n) - looping through a list (calls)
+# O(1) - checking if item in a dictionary (2 times)
+# O(1) - adding or assigning 1 to dictionary value (2 times)
+# O(n) - getting items from dictionary di
+# O(n) - iterating through list(all_numbers)
+# O(1) - comparing and assigning new value to longest_time and chatty_number variables if needed
+
+# O(n) - Final Result: getting the worse performance from all tasks
+
 Task3.py O(n log n)
+# O(n) - looping through a list (calls)
+# O(1) - getting elements from the list
+# O(n) - using find() to look for 1 char element
+# O(1) - appending to the list
+
+# O(1) - looping through another list (all_codes_list)
+# O(1) - appending to the list (all_codes_list)
+# O(n log n) - sorting list
+
+# O(n log n) - Final Result: getting the worse performance from all tasks
+
 Task4.py O(n log n)
+
+# O(n) - looping through lists
+# O(1) - appending to lists
+# O(n log n) - sorting list
+
+# O(n log n) - Final Result: getting the worse performance from all tasks
+

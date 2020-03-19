@@ -1,41 +1,60 @@
 import re
-from pprint import pprint
 
 """
 Read file into texts and calls.
 It's ok if you don't understand how to read files.
+
+COMMENT:
+Great effort but there is a simple misunderstanding.
+
+First, we have to check whether caller or calls[0] is having the Bangalore area code i.e. (080) or not.
+If yes, then we have to fetch the area code of the receiver's number i.e calls[1].
+The receiver's number is divided into 3 parts
+
+Fixed-line number - enclosed in brackets. You can use find() to fetch the index of the closing bracket.
+Mobile number - starts with 7, 8, 9 and it's starting 4 digits.
+Telemarketers number - starts with area code 140.
+Once you fetch all the area code we have to sort and display them.
+
 """
 import csv
-
-with open('texts.csv', 'r') as f:
-    reader = csv.reader(f)
-    texts = list(reader)
 
 with open('calls.csv', 'r') as f:
     reader = csv.reader(f)
     calls = list(reader)
-
-    all_code_list = []
-    to_bangalore_list = []
+    all_codes_list = []
+    from_bangalore_count = 0
+    to_bangalore_count = 0
 
     for i in calls:
-        from_bangalore = re.findall(r'^\W080\W\d+$', i[0])
-        all_codes = re.findall(r'\(?\d+\)?\s?\d+', i[1])
-        to_bangalore = re.findall(r'^\W080\W\d+$', i[1])
 
-        if from_bangalore and all_codes:
-            all_code_list += all_codes
+        if i[0][0:5] == "(080)":
+            if i[1][0] == "(":
+                fixed = i[1][i[1].find("(") + 1: i[1].find(")")]
+                all_codes_list.append(fixed)
+            if i[1][0] == "7" or i[1][0] == "8" or i[1][0] == "9":
+                mobile = i[1][0:4]
+                all_codes_list.append(mobile)
+            if i[1][0:3] == "140":
+                telemarketers = i[1][0:3]
+                all_codes_list.append(telemarketers)
 
         # percentage of calls from fixed lines in Bangalore that are to fixed lines in Bangalore.
-        if from_bangalore and to_bangalore:
-            to_bangalore_list += to_bangalore
+            from_bangalore_count += 1
+            if i[1][0:5] == "(080)":
+                to_bangalore_count += 1
 
-code_list = (sorted(list(set(all_code_list))))
-percentage = round(100 * float(len(to_bangalore_list)) / float(len(all_code_list)), 2)
+    result = []
+    for code in all_codes_list:
+        if code not in result:
+            result.append(code)
+    result.sort()
+
+    percentage = round(100 * float(to_bangalore_count) / float(from_bangalore_count), 2)
 
 print("**** Part A ****")
 print("The numbers called by people in Bangalore have codes: ")
-print(*code_list, sep='\n')
+print(*result, sep="\n")
 
 print("\n**** Part B ****")
 print(f"{percentage} percent of calls from fixed lines in Bangalore are calls to other fixed lines in Bangalore.")

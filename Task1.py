@@ -4,34 +4,42 @@ It's ok if you don't understand how to read files.
 """
 import csv
 
-count = 0
-unique_nums = []
+di = dict()
 
 with open('texts.csv', 'r') as f:
     reader = csv.reader(f)
     texts = list(reader)
 
     for i in texts:
-        if i[0] not in unique_nums:
-            unique_nums.append(i[0])
-            count+=1
-        if i[1] not in unique_nums:
-            unique_nums.append(i[1])
-            count+=1
+        if i[0] in di:
+            di[i[0]] += 1
+        else:
+            di[i[0]] = 1
+
+        if i[1] in di:
+            di[i[1]] += 1
+        else:
+            di[i[1]] = 1
 
 with open('calls.csv', 'r') as f:
     reader = csv.reader(f)
     calls = list(reader)
 
     for i in calls:
-        if i[0] not in unique_nums:
-            unique_nums.append(i[0])
-            count+=1
-        if i[1] not in unique_nums:
-            unique_nums.append(i[1])
-            count+=1
+        if i[0] in di:
+            di[i[0]] += 1
+        else:
+            di[i[0]] = 1
 
-print(f"There are {count} different telephone numbers in the records.")
+        if i[1] in di:
+            di[i[1]] += 1
+        else:
+            di[i[1]] = 1
+
+records_num = len(di)
+
+
+print(f"There are {records_num} different telephone numbers in the records.")
 
 """
 TASK 1:
